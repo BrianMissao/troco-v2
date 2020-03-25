@@ -1,32 +1,35 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public enum Dinheiro {
-    CEMREAIS(100.00),
+    CEMREAIS(BigDecimal.valueOf(100.00)),
 
-    CINQUENTAREAIS(50.00),
+    CINQUENTAREAIS(BigDecimal.valueOf(50.00)),
 
-    VINTEREAIS(20.00),
+    VINTEREAIS(BigDecimal.valueOf(20.00)),
 
-    DEZREAIS(10.00),
+    DEZREAIS(BigDecimal.valueOf(10.00)),
 
-    CINCOREAIS(05.00),
+    CINCOREAIS(BigDecimal.valueOf(05.00)),
 
-    DOISREAIS(02.00),
+    DOISREAIS(BigDecimal.valueOf(02.00)),
 
-    UMREAL(01.00),
-    CINQUENTACENTAVOS(0.50),
-    VINTEECINCOCENTAVOS(0.25),
-    DEZCENTAVOS(0.10),
-    CINCOCENTAVOS(0.05),
-    UMCENTAVO(0.01);
-    private double valor;
+    UMREAL(BigDecimal.valueOf(01.00)),
+    CINQUENTACENTAVOS(BigDecimal.valueOf(0.50)),
+    VINTEECINCOCENTAVOS(BigDecimal.valueOf(0.25)),
+    DEZCENTAVOS(BigDecimal.valueOf(0.10)),
+    CINCOCENTAVOS(BigDecimal.valueOf(0.05)),
+    UMCENTAVO(BigDecimal.valueOf(0.01));
+    private BigDecimal valor;
     private String tipoDinheiro;
     private String nomeDinheiro;
-    Dinheiro(double valor){
-        this.valor = valor;
-        this.tipoDinheiro = valor < 1.00? "centavo (s)": "real (s)";
+    Dinheiro(BigDecimal valor){
+        this.valor = valor.setScale(2, RoundingMode.HALF_EVEN);
+        this.tipoDinheiro = valor.compareTo(BigDecimal.valueOf(1.00)) == -1? "centavo (s)": "real (s)";
         this.nomeDinheiro = valor+tipoDinheiro;
     }
 
-    public double getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
